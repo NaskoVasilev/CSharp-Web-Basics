@@ -39,7 +39,7 @@ namespace HttpServer
 
 			string resposne = "HTTP/1.1 200 OK" + NewLine +
 				"Content-Type: text/html" + NewLine +
-				"Server: Nasko's Customer Server" + NewLine +
+				"Server: Nasko's Custom Server" + NewLine +
 				$"Content-Length: {Encoding.UTF8.GetBytes(responseBody).Length}" + NewLine + NewLine +
 				responseBody;
 
