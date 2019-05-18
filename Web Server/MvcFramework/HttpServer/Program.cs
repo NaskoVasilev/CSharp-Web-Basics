@@ -2,6 +2,8 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace HttpServer
 {
@@ -9,7 +11,7 @@ namespace HttpServer
 	{
 		private const string NewLine = "\r\n";
 
-		static void Main(string[] args)
+		static async Task Main(string[] args)
 		{
 			const int port = 8000;
 
@@ -19,16 +21,16 @@ namespace HttpServer
 
 			while (true)
 			{
-				TcpClient tcpClient = tcpListener.AcceptTcpClient();
+				TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();
 
 				using (NetworkStream stream = tcpClient.GetStream())
 				{
-					string requestContent = ReadRequest(stream);
+					string requestContent = await ReadRequest(stream);
 					PrintRequest(requestContent);
 					string responseBody = GetResponseBody();
 					byte[] response = GetResponse(responseBody);
 
-					stream.Write(response, 0, response.Length);
+					await stream.WriteAsync(response, 0, response.Length);
 				}
 			}
 
@@ -62,7 +64,7 @@ namespace HttpServer
 			Console.WriteLine(new string('=', 80));
 		}
 
-		private static string ReadRequest(NetworkStream stream)
+		private static async Task<string> ReadRequest(NetworkStream stream)
 		{
 			StringBuilder requestStringBuilder = new StringBuilder();
 			byte[] buffer = new byte[1024];
@@ -70,7 +72,7 @@ namespace HttpServer
 
 			do
 			{
-				readBytes = stream.Read(buffer, 0, buffer.Length);
+				readBytes = await stream.ReadAsync(buffer, 0, buffer.Length);
 				string requestLine = Encoding.UTF8.GetString(buffer, 0, readBytes);
 				requestStringBuilder.Append(requestLine);
 			}
