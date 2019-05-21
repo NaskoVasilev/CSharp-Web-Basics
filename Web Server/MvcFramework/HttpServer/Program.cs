@@ -11,7 +11,7 @@ namespace HttpServer
 	{
 		private const string NewLine = "\r\n";
 
-		static async Task Main(string[] args)
+		static void Main(string[] args)
 		{
 			const int port = 8000;
 
@@ -21,16 +21,16 @@ namespace HttpServer
 
 			while (true)
 			{
-				TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();
+				TcpClient tcpClient = tcpListener.AcceptTcpClientAsync().GetAwaiter().GetResult();
 
 				using (NetworkStream stream = tcpClient.GetStream())
 				{
-					string requestContent = await ReadRequest(stream);
+					string requestContent = ReadRequest(stream).GetAwaiter().GetResult();
 					PrintRequest(requestContent);
 					string responseBody = GetResponseBody();
 					byte[] response = GetResponse(responseBody);
 
-					await stream.WriteAsync(response, 0, response.Length);
+					stream.WriteAsync(response, 0, response.Length).GetAwaiter().GetResult();
 				}
 			}
 
@@ -41,6 +41,7 @@ namespace HttpServer
 
 			string resposne = "HTTP/1.1 200 OK" + NewLine +
 				"Content-Type: text/html" + NewLine +
+				"Set-Cookie: lang=bg; Domain=localhost; HttpOnly" + NewLine + 
 				"Server: Nasko's Custom Server" + NewLine +
 				$"Content-Length: {Encoding.UTF8.GetBytes(responseBody).Length}" + NewLine + NewLine +
 				responseBody;
