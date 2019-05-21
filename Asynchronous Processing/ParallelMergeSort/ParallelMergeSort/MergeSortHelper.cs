@@ -28,15 +28,21 @@ namespace ParallelMergeSort
 			var copy = (T[])array.Clone();
 
 			if (parallel)
+			{
 				ParallelMergeSort(array, copy, low, high, GetMaxDepth());
+			}
 			else
+			{
 				SequentialMergeSort(array, copy, low, high);
+			}
 		}
 
 		private void SequentialMergeSort(T[] to, T[] temp, int low, int high)
 		{
 			if (low >= high)
+			{
 				return;
+			}
 			var mid = (low + high) / 2;
 			// On the way down the recursion tree both arrays have 
 			// the same data so we can switch them. Sort two 
@@ -66,13 +72,21 @@ namespace ParallelMergeSort
 			for (; lowTo <= highTo; lowTo++)
 			{
 				if (lowX > highX)
+				{
 					to[lowTo] = temp[lowY++];
+				}
 				else if (lowY > highY)
+				{
 					to[lowTo] = temp[lowX++];
+				}
+				else if(Less(temp[lowX], temp[lowY]))
+				{
+					to[lowTo] = temp[lowX++];
+				}
 				else
-					to[lowTo] = Less(temp[lowX], temp[lowY])
-									? temp[lowX++]
-									: temp[lowY++];
+				{
+					to[lowTo] = temp[lowY++];
+				}
 			}
 		}
 
@@ -85,7 +99,7 @@ namespace ParallelMergeSort
 
 		private void ParallelMergeSort(T[] to, T[] temp, int low, int high, int depth)
 		{
-			if (high - low + 1 <= SequentialThreshold|| depth <= 0)
+			if (high - low + 1 <= SequentialThreshold || depth <= 0)
 			{
 				// Resort to sequential algorithm if either 
 				// recursion depth limit is reached or sub-problem 
@@ -155,8 +169,7 @@ namespace ParallelMergeSort
 			depth--;
 			Parallel.Invoke(
 				() => ParallelMerge(to, temp, lowX, midX - 1, lowY, midY - 1, lowTo, depth),
-				() => ParallelMerge(to, temp, midX + 1, highX, midY, highY, midTo + 1, depth)
-				);
+				() => ParallelMerge(to, temp, midX + 1, highX, midY, highY, midTo + 1, depth));
 		}
 
 		// Searches for index the first element in low to high 
@@ -171,9 +184,13 @@ namespace ParallelMergeSort
 			{
 				var mid = (low + high) / 2;
 				if (Less(from[mid], lessThanOrEqualTo))
+				{
 					low = mid + 1;
+				}
 				else
+				{
 					high = mid;
+				}
 			}
 			return low;
 		}

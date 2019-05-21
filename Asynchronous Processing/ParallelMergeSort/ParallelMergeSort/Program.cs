@@ -33,7 +33,7 @@ namespace ParallelMergeSort
 
 			for (int i = 0; i < arr.Length - 1; i++)
 			{
-				if(arr[i] > arr[i + 1])
+				if (arr[i] > arr[i + 1])
 				{
 					isSort = false;
 				}
