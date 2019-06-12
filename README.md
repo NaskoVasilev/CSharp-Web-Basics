@@ -13,10 +13,10 @@ The code written in this course is in CSharp-MVC-Framework repository where is b
   5. MVC INTRODUCTION
   
   6. MVC ADVANCED - VIEW ENGINE
-    - Create custom view engine like Razor using Roslyn library to compile the c# code
+      - Create custom view engine like Razor using Roslyn library to compile the c# code
   
   7. MVC ADVANCED - IOC AND DATA BINDING
-    - Implement custom Dependency injection and model binding
+      - Implement custom Dependency injection and model binding
   
   8. AUTHENTICATION AND AUTHORIZATION
   
