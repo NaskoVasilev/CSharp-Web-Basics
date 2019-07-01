@@ -6,12 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\**" />
+    <EmbeddedResource Remove="ViewModels\**" />
+    <None Remove="ViewModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\SIS.MvcFramework\SIS.MvcFramework.csproj" />
     <ProjectReference Include="..\SULS.Data\SULS.Data.csproj" />
+    <ProjectReference Include="..\SULS.InputModels\SULS.InputModels.csproj" />
     <ProjectReference Include="..\SULS.Services\SULS.Services.csproj" />
   </ItemGroup>
 
@@ -55,13 +62,6 @@
     <None Update="Views\_Layout.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModels\Home\" />
-    <Folder Include="ViewModels\Problems\" />
-    <Folder Include="ViewModels\Submissions\" />
-    <Folder Include="ViewModels\Users\" />
   </ItemGroup>
 
 </Project>
