@@ -13,18 +13,21 @@
                     <th scope="col" class="col-lg-3 suls-text-color">Delete</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr class="row">
-                    <td class="col-lg-3 suls-text-color">@problem.Username</td>
-                    <td class="col-lg-3 suls-text-color">@problem.AchievedResult / @problem.MaxPoints</td>
-                    <td class="col-lg-3 suls-text-color">@problem.CreatedOn</td>
-                    <td class="col-lg-3 suls-text-color">
-                        <div class="button-holder">
-                            <a href="/Submissions/Delete?id=@problem.SubmissionId" class="btn btn-warning">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
+			<tbody>
+				@foreach(var submission in Model.Submissions)
+				{
+					<tr class="row">
+						<td class="col-lg-3 suls-text-color">@submission.Username</td>
+						<td class="col-lg-3 suls-text-color">@submission.AchievedResult / @Model.MaxPoints</td>
+						<td class="col-lg-3 suls-text-color">@submission.CreatedOn</td>
+						<td class="col-lg-3 suls-text-color">
+							<div class="button-holder">
+								<a href="/Submissions/Delete?id=@submission.Id" class="btn btn-warning">Delete</a>
+							</div>
+						</td>
+					</tr>
+				}
+			</tbody>
         </table>
     </div>
 </main>

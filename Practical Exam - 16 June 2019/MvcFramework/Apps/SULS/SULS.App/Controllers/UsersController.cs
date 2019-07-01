@@ -68,9 +68,8 @@ namespace SULS.App.Controllers
 			};
 
 			string userId = usersService.CreateUser(user);
-			this.SignIn(userId, model.Username, model.Email);
 
-			return Redirect("/");
+			return Redirect("/Users/Login");
 		}
 
 		public IActionResult Logout()
